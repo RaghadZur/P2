@@ -46,7 +46,7 @@ t2 = torch.tensor([4, 5, 6])
 
 # 1st method:
 t = torch.empty(3)
-torch.add(t1, t2, out=t)
+t = torch.add(t1, t2)
 
 # 2nd method:
 t = t1 + t2
