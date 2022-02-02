@@ -42,7 +42,7 @@ my_new_array = my_tensor.numpy()
 t1 = torch.tensor([1, 2, 3])
 t2 = torch.tensor([4, 5, 6])
 
-# Addition and Subtraction
+# -----------------Addition and Subtraction-----------------
 
 # 1st method:
 t = torch.empty(3)
@@ -51,14 +51,14 @@ t = torch.add(t1, t2)
 # 2nd method:
 t = t1 + t2
 
-# Division
+# -----------------Division-----------------
 t = torch.true_divide(t1, t2)
 
 # Inplace Operations (_ is followed at the end of the method)
 t1.add_(t2)
 t1.subtract_(t2)
 
-# Exponentiation
+# -----------------Exponentiation-----------------
 
 # 1st method
 t = t1.pow(2)
@@ -66,7 +66,7 @@ t = t1.pow(2)
 # 2nd method
 t = t1 ** 2
 
-# Matrix Multiplication
+# -----------------Matrix Multiplication-----------------
 t1 = torch.rand((2,5))
 t2 = torch.rand((5,3))
 
