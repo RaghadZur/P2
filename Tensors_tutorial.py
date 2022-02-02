@@ -67,8 +67,8 @@ t = t1.pow(2)
 t = t1 ** 2
 
 # -----------------Matrix Multiplication-----------------
-t1 = torch.rand((2,5))
-t2 = torch.rand((5,3))
+t1 = torch.rand((2, 5))
+t2 = torch.rand((5, 3))
 
 # 1st method
 t3 = torch.mm(t1, t2)
@@ -76,3 +76,16 @@ t3 = torch.mm(t1, t2)
 # 2nd method
 t3 = t1.mm(t2)
 
+# -----------------Matrix Exponentiation-----------------
+t1 = torch.rand((3, 3))
+
+t2 = t1.matrix_power(2)
+
+# -----------------Element Multiplication-----------------
+t1 = torch.tensor([1, 2, 3])
+t2 = torch.tensor([4, 5, 6])
+
+t = t1 * t2
+
+# -----------------Dot Product-----------------
+t = torch.dot(t1, t2)
