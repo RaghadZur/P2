@@ -92,3 +92,33 @@ t = torch.dot(t1, t2)
 
 # ----------------- Batch Matrix Multiplication-----------------
 t = torch.dot(t1, t2)
+
+# ----------------- Batch Matrix Multiplication-----------------
+batch = 3
+n = 1
+m = 2
+p = 3
+t1 = torch.rand((batch, n, m))
+t2 = torch.rand((batch, m, p))
+bmm = torch.bmm(t1, t2)
+
+# ----------------- Broadcasting -----------------
+# in the example below, t2 is being subtracted from all 5 rows in t1
+t1 = torch.rand((5, 5))
+t2 = torch.rand((1, 5))
+
+t = t1 - t2
+t = t1 ** t2
+
+# ----------------- Sum Method -----------------
+# Get a scalar
+torch.sum(t1)
+
+# To sum over all rows (i.e. for each column)
+torch.sum(t1, dim=0)
+
+# To sum over all columns (i.e. for each row)
+torch.sum(t1, dim=1)
+
+# ----------------- Broadcasting -----------------
+
