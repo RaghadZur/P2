@@ -89,3 +89,6 @@ t = t1 * t2
 
 # -----------------Dot Product-----------------
 t = torch.dot(t1, t2)
+
+# ----------------- Batch Matrix Multiplication-----------------
+t = torch.dot(t1, t2)
