@@ -221,9 +221,4 @@ t = torch.cat((t1, t2), dim=0)
 # flatten the matrix completely into one dimension
 t4 = t.view(-1)
 
-t = torch.arange(10)
-print(t)
-
-t5 = torch.unsqueeze(t, dim =1)
-print(t5)
-
+# squeeze and unsqueeze?
