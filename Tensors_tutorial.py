@@ -142,3 +142,38 @@ torch.eq(t1, t2)
 
 # sort the tensor values in the specified order
 torch.sort(t1, descending=False)
+
+# it will change the values of any elements that are below the min and above the max specified
+torch.clamp(t1, min=0, max=10)
+
+# we can check the values of a bool type tensor
+t4 = torch.tensor([0, 1, 1, 1, 0], dtype=torch.bool)
+torch.any(t4)
+torch.all(t4)
+
+# %%%%%%%%%%%%%%%%%%%%%%%%% TENSOR INDEXING %%%%%%%%%%%%%%%%%%%%%%%%%
+
+batch_size = 10
+features = 25
+t5 = torch.rand((batch_size, features))
+
+# all features of the first example in the batch
+t = t5[0]  # equivalent to t5[0,:]
+t = t5[0].shape
+
+# the first feature of all batches
+t = t5[:, 0].shape
+
+# the first 10 features of the third example of the batch
+t = t5[2, : 10].shape
+
+# return the elements with an indix that match the elements in the indices list
+t = torch.arange(10)
+ind = [2, 5, 8]
+print(t[ind])
+
+# returns the two elements with indices (1,3) and (0,1) in the given tensor
+t = torch.rand((5, 5))
+rows = torch.tensor([1, 0])
+cols = torch.tensor([3, 1])
+print(t[rows, cols])
