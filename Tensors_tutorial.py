@@ -120,5 +120,25 @@ torch.sum(t1, dim=0)
 # To sum over all columns (i.e. for each row)
 torch.sum(t1, dim=1)
 
-# ----------------- Broadcasting -----------------
+# ----------------- Max & Min  -----------------
 
+# returns the values and their indices
+torch.max(t1, dim=1)
+torch.min(t1, dim=0)
+
+# returns the indices of the max/min value of all elements in the input
+torch.argmax(t1)
+torch.argmin(t1, dim=0)
+
+# ----------------- Other Useful Maths Methods -----------------
+# converts the tensor elements to absolute values
+torch.abs(t1)
+
+# returns the mean
+torch.mean(t1.float(), dim=0)
+
+# returns true if any two elements are equal, otherwise false
+torch.eq(t1, t2)
+
+# sort the tensor values in the specified order
+torch.sort(t1, descending=False)
