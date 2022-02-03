@@ -177,3 +177,26 @@ t = torch.rand((5, 5))
 rows = torch.tensor([1, 0])
 cols = torch.tensor([3, 1])
 print(t[rows, cols])
+
+# returns the elements in the tensor that are less than 2 and more than 8
+t = torch.arange(10)
+print(t[(t < 2) | (t > 8)])
+
+# returns the elements in the tensor that have remainder 0 when divided by 2
+t = torch.arange(10)
+print(t[t.remainder(2) == 0])
+
+# if the elements dont meet the condition then an alternative value is gives as per 3rd attribute
+# if they do meet the condition, they are returned as they are
+print(torch.where(t > 5, t, t * 2))
+
+# returns the unique elements in a tensor
+t.unique()
+
+# returns the dimension of a tensor
+t.ndimension()
+
+# count the number of elements in a tensor
+t.numel()
+
+# %%%%%%%%%%%%%%%%%%%%%%%%% TENSOR RESHAPING %%%%%%%%%%%%%%%%%%%%%%%%%
