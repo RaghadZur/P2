@@ -200,3 +200,30 @@ t.ndimension()
 t.numel()
 
 # %%%%%%%%%%%%%%%%%%%%%%%%% TENSOR RESHAPING %%%%%%%%%%%%%%%%%%%%%%%%%
+
+# reshaping the tensor into a matrix of 3x3
+t = torch.arange(9)
+# 1st method
+t1 = t.view(3, 3)
+
+# 2nd method
+t2 = t.reshape(3, 3)
+
+# transpose of the tensor matrix
+t3 = t2.t()
+
+# concatenate tensors
+t1 = torch.rand((2, 3))
+t2 = torch.rand((2, 3))
+
+t = torch.cat((t1, t2), dim=0)
+
+# flatten the matrix completely into one dimension
+t4 = t.view(-1)
+
+t = torch.arange(10)
+print(t)
+
+t5 = torch.unsqueeze(t, dim =1)
+print(t5)
+
