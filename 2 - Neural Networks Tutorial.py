@@ -47,8 +47,46 @@ optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
 # %%%%%%%%%%%%%%%%% TRAINING NEURAL NETWORKS %%%%%%%%%%%%%%%
 for epoch in range(num_epochs):
-    for batch_idx, (data,targets) in enumerate(train_loader):
+    for batch_idx, (data, targets) in enumerate(train_loader):
+        # getting data to cuda
         data = data.to(device=device)
         targets = targets.to(device=device)
 
-        print(data.shape)
+        # correcting the shape
+        data = data.reshape(data.shape[0], -1)
+
+        # forward
+        scores = model(data)
+        loss = criterion(scores, targets)
+
+        # backwards
+        optimizer.zero_grad()
+        loss.backward()
+
+        # gradient descent or adam step
+        optimizer.step()
+
+
+# %%%%%%%%%%%%%%%%% MODEL EVALUATION %%%%%%%%%%%%%%%
+def check_accuracy(loader, model):
+    num_corrects = 0
+    num_samples = 0
+    model.eval()
+
+    with torch.no_grad():
+        for x, y in loader:
+            x = x.to(device=device)
+            y = y.to(device=device)
+            x = x.reshape(x.shape[0], -1)
+
+            scores = model(x)
+            _, predictions = scores.max(1)
+            num_corrects += (predictions == y).sum()
+            num_samples += predictions.size(0)
+
+    model.train()
+    return num_corrects / num_samples
+
+
+print(f"Accuracy on training set: {check_accuracy(train_loader, model) * 100:.2f}")
+print(f"Accuracy on test set: {check_accuracy(test_loader, model) * 100:.2f}")
