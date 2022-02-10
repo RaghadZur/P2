@@ -40,6 +40,10 @@ class CNN(nn.Module):
 
         return x
 
+model = CNN()
+x = torch.random.rand(64,1,28,28)
+print(x.shape)
+exit()
 
 # %%%%%%%%%%%%%%%%% SET THE DEVICE %%%%%%%%%%%%%%%
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
