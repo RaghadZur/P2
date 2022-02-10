@@ -21,6 +21,13 @@ class NN(nn.Module):
         return x
 
 
+# %%%%%%%%%%%%%%%%% CREATING CONVOLUTIONAL NEURAL NETWORKS %%%%%%%%%%%%%%%
+class CNN(nn.Module):
+    def __init__(self, in_channels=1, num_classes=10):
+        super(CNN, self).__init__()
+        self.conv1 = nn.Conv2d(in_channels=1, out_channels=4, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+
+
 # %%%%%%%%%%%%%%%%% SET THE DEVICE %%%%%%%%%%%%%%%
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
