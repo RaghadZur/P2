@@ -1,3 +1,7 @@
+"""
+SIMPLE CONVOLUTIONAL NERUAL NETWORK CODE USING PYTORCH LIBRARY
+"""
+
 # %%%%%%%%%%%%%%%%%%%% IMPORTING THE PACKAGES %%%%%%%%%%%%%%%%%%%%
 import torch
 import torch.nn as nn
@@ -6,50 +10,47 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader
 import torchvision.datasets as datasets
 import torchvision.transforms as transforms
-
-
-# %%%%%%%%%%%%%%%%% CREATING FULLY CONNECTED NEURAL NETWORKS %%%%%%%%%%%%%%%
-class NN(nn.Module):
-    def __init__(self, input_size, num_classes):  # size = 784 (28x8x)
-        super(NN, self).__init__()
-        self.fc1 = nn.Linear(input_size, 50)
-        self.fc2 = nn.Linear(50, num_classes)
-
-    def forward(self, x):
-        x = F.relu(self.fc1(x))
-        x = (self.fc2(x))
-        return x
+from tqdm import tqdm
 
 
 # %%%%%%%%%%%%%%%%% CREATING CONVOLUTIONAL NEURAL NETWORKS %%%%%%%%%%%%%%%
 class CNN(nn.Module):
-    def __init__(self, in_channels = 1, num_classes=10):
+    def __init__(self, in_channels=1, num_classes=10):
         super(CNN, self).__init__()
-        self.conv1 = nn.Conv2d(in_channels=1, out_channels=4, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
-        self.pool = nn.MaxPool2d(kernel_size= (2,2), stride= (2,2))
-        self.conv2 = nn.Conv2d(in_channels=8, out_channels=16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
-        self.fc1 = nn.linear(16*7*7, num_classes)
+        self.conv1 = nn.Conv2d(in_channels=in_channels,
+                               out_channels=8,
+                               kernel_size=(3, 3),
+                               stride=(1, 1),
+                               padding=(1, 1)
+                               )
+        self.pool = nn.MaxPool2d(kernel_size=(2, 2),
+                                 stride=(2, 2)
+                                 )
+        self.conv2 = nn.Conv2d(in_channels=8,
+                               out_channels=16,
+                               kernel_size=(3, 3),
+                               stride=(1, 1),
+                               padding=(1, 1))
+
+        self.fc1 = nn.Linear(16 * 7 * 7,
+                             num_classes)
 
     def forward(self, x):
         x = F.relu(self.conv1(x))
         x = (self.pool(x))
         x = F.relu(self.conv2(x))
         x = (self.pool(x))
-        x = x.reshape(x.shape[0],-1)
+        x = x.reshape(x.shape[0], -1)
         x = (self.fc1(x))
 
         return x
 
-model = CNN()
-x = torch.random.rand(64,1,28,28)
-print(x.shape)
-exit()
 
 # %%%%%%%%%%%%%%%%% SET THE DEVICE %%%%%%%%%%%%%%%
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # %%%%%%%%%%%%%%%%% HYPERPARAMETERS %%%%%%%%%%%%%%%
-input_size = 784
+in_channels = 1
 num_classes = 10
 learning_rate = 0.001
 batch_size = 64
@@ -63,7 +64,7 @@ tes_dataset = datasets.MNIST(root='dataset/', train=False, transform=transforms.
 test_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
 
 # %%%%%%%%%%%%%%%%% INITIALISING THE NETWORK %%%%%%%%%%%%%%%
-model = NN(input_size=input_size, num_classes=num_classes).to(device)
+model = CNN().to(device)
 
 # %%%%%%%%%%%%%%%%% TRAINING NEURAL NETWORKS %%%%%%%%%%%%%%%
 criterion = nn.CrossEntropyLoss()
@@ -75,9 +76,6 @@ for epoch in range(num_epochs):
         # getting data to cuda
         data = data.to(device=device)
         targets = targets.to(device=device)
-
-        # correcting the shape
-        data = data.reshape(data.shape[0], -1)
 
         # forward
         scores = model(data)
