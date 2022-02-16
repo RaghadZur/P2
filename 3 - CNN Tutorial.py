@@ -2,7 +2,7 @@
 SIMPLE CONVOLUTIONAL NERUAL NETWORK CODE USING PYTORCH LIBRARY
 """
 
-# %%%%%%%%%%%%%%%%%%%% IMPORTING THE PACKAGES %%%%%%%%%%%%%%%%%%%%
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% IMPORTING THE NEEDED LIBRARIES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 import torch
 import torchvision
 import torch.nn.functional as F
@@ -14,7 +14,7 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 
 
-# %%%%%%%%%%%%%%%%% CREATING CONVOLUTIONAL NEURAL NETWORKS %%%%%%%%%%%%%%%
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CREATING CONVOLUTIONAL NEURAL NETWORKS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 class CNN(nn.Module):
     def __init__(self, in_channels=1, num_classes=10):
         super(CNN, self).__init__()
@@ -47,7 +47,7 @@ class CNN(nn.Module):
         return x
 
 
-# %%%%%%%%%%%%%%%%% SET THE DEVICE %%%%%%%%%%%%%%%
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SET THE DEVICE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # %%%%%%%%%%%%%%%%% HYPERPARAMETERS %%%%%%%%%%%%%%%
@@ -57,21 +57,35 @@ learning_rate = 0.001
 batch_size = 64
 num_epochs = 5
 
-# %%%%%%%%%%%%%%%%% LOADING DATA %%%%%%%%%%%%%%%
-train_dataset = datasets.MNIST(root='dataset/', train=True, transform=transforms.ToTensor(), download=True)
-train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LOADING DATA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+train_dataset = datasets.MNIST(root='dataset/',
+                               train=True,
+                               transform=transforms.ToTensor(),
+                               download=True)
 
-test_dataset = datasets.MNIST(root='dataset/', train=False, transform=transforms.ToTensor(), download=True)
-test_loader = DataLoader(dataset=test_dataset, batch_size=batch_size, shuffle=True)
+train_loader = DataLoader(dataset=train_dataset,
+                          batch_size=batch_size,
+                          shuffle=True)
 
-# %%%%%%%%%%%%%%%%% INITIALISING THE NETWORK %%%%%%%%%%%%%%%
-model = CNN(in_channels=in_channels, num_classes=num_classes).to(device)
+test_dataset = datasets.MNIST(root='dataset/',
+                              train=False,
+                              transform=transforms.ToTensor(),
+                              download=True)
 
-# %%%%%%%%%%%%%%%%% TRAINING NEURAL NETWORKS %%%%%%%%%%%%%%%
+test_loader = DataLoader(dataset=test_dataset,
+                         batch_size=batch_size,
+                         shuffle=True)
+
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INITIALISING THE NETWORK %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+model = CNN(in_channels=in_channels,
+            num_classes=num_classes).to(device)
+
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TRAINING NEURAL NETWORKS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=learning_rate)
+optimizer = optim.Adam(model.parameters(),
+                       lr=learning_rate)
 
-# %%%%%%%%%%%%%%%%% TRAINING NEURAL NETWORKS %%%%%%%%%%%%%%%
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TRAINING NEURAL NETWORKS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 for epoch in range(num_epochs):
     for batch_idx, (data, targets) in enumerate(tqdm(train_loader)):
         # getting data to cuda
@@ -90,7 +104,7 @@ for epoch in range(num_epochs):
         optimizer.step()
 
 
-# %%%%%%%%%%%%%%%%% MODEL EVALUATION %%%%%%%%%%%%%%%
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MODEL EVALUATION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 def check_accuracy(loader, model):
     num_corrects = 0
     num_samples = 0
